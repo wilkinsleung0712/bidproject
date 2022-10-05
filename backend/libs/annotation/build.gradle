@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+group = "libs"
+
+jar {
+    archivesBaseName = "libs-annotation"
+}
+
+dependencies {
+    implementation "com.google.code.findbugs:jsr305:$googleJsrVersion"
+}

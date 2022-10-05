@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+}
+
+jar {
+    archivesBaseName = "intuit-backend-repository"
+}
+
+dependencies {
+
+}
+
+test {
+    useJUnitPlatform()
+}

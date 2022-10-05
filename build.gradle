@@ -1,0 +1,67 @@
+plugins {
+    id 'com.diffplug.spotless' version "6.3.0" apply false
+    id "com.github.node-gradle.node" version "3.3.0" apply false
+}
+
+ext {
+    springContextVersion = '5.3.9'
+    lombokVersion = '1.18.22'
+    jacksonVersion = '2.12.4'
+    logbackVersion = '1.2.3'
+    junitVersion = '5.7.1'
+    junitPlatformVersion = '1.7.1'
+    junitJupiterVersion = '5.8.2'
+    swagger = '2.9.2'
+    mapStructVersion = "1.4.2.Final"
+    googleJavaFormatVersion = '1.13.0'
+    googleJsrVersion = '3.0.1'
+    persistenceApiVersion= '2.2'
+    hibernateVersion = '5.4.32.Final'
+    postgresVersion = '42.3.2'
+    findbugsVersion = 'jsr305:3.0.2'
+}
+
+gradle.buildFinished {
+    project.buildDir.deleteDir()
+}
+
+allprojects {
+
+    group 'com.intuit'
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    afterEvaluate { project ->
+        if (project.getPluginManager().hasPlugin("com.github.node-gradle.node")) {
+            node {
+                version = "18.0.0"
+                download = true
+                nodeModulesDir = file("${projectDir}/node_modules")
+                workDir = file("${projectDir}/.gradle/nodejs")
+            }
+
+            task pnpmInstall(type: NpxTask) {
+                command = 'pnpm'
+                args = ['install', '--no-frozen-lockfile']
+
+                inputs.files('package.json', 'pnpm-lock.json', 'pnpm-workspace.yaml', 'tsconfig.json', 'turbo.json')
+                outputs.dir("${projectDir}/build")
+
+            }
+
+            task pnpmBuild(type: NpxTask) {
+                dependsOn pnpmInstall
+                command = 'pnpm'
+                args = ['build']
+            }
+
+            // todo: needs to build frontend as well
+            project.tasks.build.dependsOn(pnpmInstall)
+
+        }
+    }
+}

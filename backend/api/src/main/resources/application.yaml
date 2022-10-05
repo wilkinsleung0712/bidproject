@@ -1,0 +1,26 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:postgresql://localhost:5432/intuti-dev?reWriteBatchedInserts=true
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans=true:
+        default_schema: public
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        format_sql: true
+        jdbc:
+          batch_size: 5
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+    open-in-view: false
+    database: postgresql

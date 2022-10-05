@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+jar {
+    archivesBaseName = "intuit-backend-model"
+}
+
+dependencies {
+    implementation project(':backend:libs:annotation')
+    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation "javax.persistence:javax.persistence-api:$persistenceApiVersion"
+    implementation "org.hibernate:hibernate-core:$hibernateVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+}
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}

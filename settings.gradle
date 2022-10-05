@@ -1,0 +1,9 @@
+rootProject.name = 'bidproject'
+include 'backend'
+include 'backend:repository'
+include 'backend:model'
+include 'backend:libs'
+include 'backend:libs:annotation'
+include 'backend:api'
+include 'frontend'
+
